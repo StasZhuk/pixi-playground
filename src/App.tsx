@@ -1,13 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef } from 'react';
 import * as PIXI from 'pixi.js';
-// import { Loader  } from '@pixi/loaders';
-// import { Application } from '@pixi/app';
-// import { extensions } from '@pixi/core';
-// import Cherry from './models/slots/cherry';
-// import Apple from './models/slots/apple';
-
-// extensions.add(AppLoaderPlugin);
 
 const slotTextures = [
   PIXI.Texture.from('https://pixijs.com/assets/eggHead.png'),
@@ -138,8 +131,6 @@ class AppPixi {
   }
 
   onAssetsLoaded() {
-    // this.reelContainer = new PIXI.Container();
-
     for (let i = 0; i < 1; i++) {
       const rc = new PIXI.Container();
       rc.x = i * REEL_WIDTH;
@@ -182,10 +173,6 @@ class AppPixi {
     right.beginFill(0, 9);
     right.drawRect(this.app.screen.width - REEL_WIDTH, 0, this.app.screen.width, this.app.screen.height);
 
-    const bottom = new PIXI.Graphics();
-    // bottom.beginFill(0, 1);
-    // bottom.drawRect(0, SYMBOL_SIZE * 3 + margin, this.app.screen.width, margin);
-
     // Add play text
     const style = new PIXI.TextStyle({
         fontFamily: 'Arial',
@@ -207,22 +194,15 @@ class AppPixi {
     const playText = new PIXI.Text('Free spin', style);
     playText.x = Math.round((this.app.screen.width - playText.width) / 2);
     playText.y = this.app.screen.height / 2 - margin;
-    bottom.addChild(playText);
-
-    // Add header text
-    // const headerText = new PIXI.Text('PIXI SLOTS TEST', style);
-    // headerText.x = Math.round((top.width - headerText.width) / 2);
-    // headerText.y = Math.round((margin - headerText.height) / 2);
-    // top.addChild(headerText);
 
     this.app.stage.addChild(left);
     this.app.stage.addChild(right);
-    this.app.stage.addChild(bottom);
+    this.app.stage.addChild(playText);
 
     // Set the interactivity.
-    bottom.eventMode = 'static';
-    bottom.cursor = 'pointer';
-    bottom.addListener('pointerdown', () => {
+    playText.eventMode = 'static';
+    playText.cursor = 'pointer';
+    playText.addListener('pointerdown', () => {
         this.startPlay();
     });
         
@@ -301,7 +281,6 @@ class AppPixi {
 
     // Reels done handler.
   reelsComplete() {
-    console.log('finish', this)
     this.running = false;
     this.tweening = []
   }
@@ -353,9 +332,7 @@ const App = () => {
     }
   }, [])
 
-  return <div>
-      <div ref={appRef}></div>
-    </div>
+  return <div ref={appRef}></div>
 }
 
 export default App
