@@ -249,11 +249,11 @@ class AppPixi {
             const phase = Math.min(1, (now - t.start) / t.time);
 
             t.object[t.property] = this.lerp(t.propertyBeginValue, t.target, t.easing(phase));
-            if (t.change) t.change(t);
+            if (t.change) t.change();
             if (phase === 1)
             {
                 t.object[t.property] = t.target;
-                if (t.complete) t.complete(t);
+                if (t.complete) t.complete();
                 remove.push(t);
             }
         }
